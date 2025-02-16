@@ -9,10 +9,13 @@ screen = pygame.display.set_mode((800, 600))
 # Set the title of the window
 pygame.display.set_caption("Game")
 
+# Set up the clock for managing the frame rate
+clock = pygame.time.Clock()
+
 
 # Player Properties
 player_pos = [400, 300]
-player_image = pygame.Surface((50, 50))
+player_image = pygame.Surface((20, 20))
 player_image.fill((255, 0, 0))  # Red square as player
 
 
@@ -31,14 +34,14 @@ def main():
 
         # Handle player input
         player_input = pygame.key.get_pressed()
-        if player_input[pygame.K_UP]:
-            player_pos[1] -= 1
-        if player_input[pygame.K_DOWN]:
-            player_pos[1] += 1
-        if player_input[pygame.K_LEFT]:
-            player_pos[0] -= 1 
-        if player_input[pygame.K_RIGHT]:
-            player_pos[0] += 1
+        if player_input[pygame.K_w]:
+            player_pos[1] -= 10
+        if player_input[pygame.K_s]:
+            player_pos[1] += 10
+        if player_input[pygame.K_a]:
+            player_pos[0] -= 10
+        if player_input[pygame.K_d]:
+            player_pos[0] += 10
 
         
         # Clear the screen        
@@ -49,6 +52,7 @@ def main():
 
         # Update game state here
         pygame.display.flip()
+        clock.tick(60)  # Limit to 60 frames per second
 
 
 if __name__ == "__main__":
