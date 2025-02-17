@@ -19,13 +19,16 @@ text_color = (255, 255, 255)  # White color for text
 
 # Player Properties
 player_pos = [400, 300] # Starting position of the player
-player_image = pygame.Surface((20, 20)) # Create a simple surface for the player
+player_size = (20, 20) # Size of the player
+player_image = pygame.Surface(player_size) # Create a simple surface for the player
 player_image.fill((255, 0, 0))  # Red square as player
-
+player_rect = pygame.Rect(player_pos[0], player_pos[1], *player_size) # Create a rect for the player to handle collisions and boundaries
 
 # Score 
 score = 0  # Initialize score
 rendered_score = font.render(f"Score: {score}", True, text_color)  # Render the score text
+
+
 
 # Main game loop
 def main():
