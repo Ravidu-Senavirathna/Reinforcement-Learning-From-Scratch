@@ -54,12 +54,20 @@ def main():
         if player_input[pygame.K_d]:
             player_pos[0] += 10
 
-        
+
+        # Create a rect representing the screen
+        screen_rect = screen.get_rect()
+
+        # In your player update loop
+        player_rect.topleft = player_pos
+        player_rect.clamp_ip(screen_rect)
+        player_pos[0], player_pos[1] = player_rect.topleft
+
         # Clear the screen
         screen.fill((0, 0, 0))
 
         # Draw the player
-        screen.blit(player_image, player_pos)
+        screen.blit(player_image, player_rect)
         # Draw the score
         screen.blit(rendered_score, (10, 10))
 
