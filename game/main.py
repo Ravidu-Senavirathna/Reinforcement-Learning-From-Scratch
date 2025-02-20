@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # Initialize Pygame
 pygame.init()
@@ -87,8 +88,8 @@ def main():
             rendered_score = font.render(f"Score: {score}", True, text_color)
 
             # Move the food to a new random position (for simplicity, we just move it to a fixed position here)
-            food_pos[0] = (food_pos[0] + 50) % 800  # Move food horizontally and wrap around
-            food_pos[1] = (food_pos[1] + 50) % 600  # Move food vertically and wrap around
+            food_pos[0] = random.randint(0, 790)
+            food_pos[1] = random.randint(0, 590)
             food_rect.topleft = food_pos  # Update the food rect position
 
         # Update game state here
