@@ -80,6 +80,17 @@ def main():
         # Draw the score
         screen.blit(rendered_score, (10, 10))
 
+
+        # Check for collision between player and food
+        if player_rect.colliderect(food_rect):
+            score = score + 1
+            rendered_score = font.render(f"Score: {score}", True, text_color)
+
+            # Move the food to a new random position (for simplicity, we just move it to a fixed position here)
+            food_pos[0] = (food_pos[0] + 50) % 800  # Move food horizontally and wrap around
+            food_pos[1] = (food_pos[1] + 50) % 600  # Move food vertically and wrap around
+            food_rect.topleft = food_pos  # Update the food rect position
+
         # Update game state here
         pygame.display.flip()
         # Limit the frame rate to 60 frames per second
