@@ -17,10 +17,14 @@ class Player(pygame.sprite.Sprite):
         self.player_rect = pygame.Rect(self.x, self.y, *PLAYER_SIZE) # Create a rect for the player to handle collisions and boundaries
 
     def draw(self, screen):
-        pass
+        player_image = pygame.Surface(PLAYER_SIZE) # Create a simple surface for the player
+        player_image.fill(PLAYER_COLOR)  # Red square as player
+        screen.blit(player_image, (self.x, self.y))
         
     def move(self, dx, dy):
-        pass
+        self.x += dx
+        self.y += dy
+        self.player_rect.topleft = (self.x, self.y)  # Update the player's rect position
 
     def get_rect(self):
         pass
