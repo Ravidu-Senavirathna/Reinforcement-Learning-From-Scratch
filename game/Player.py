@@ -12,8 +12,10 @@ STARTING_POSITION_Y = (SCREEN_HEIGHT // 2) - (PLAYER_SIZE[1] // 2)
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        pass
-        
+        self.x = STARTING_POSITION_X
+        self.y = STARTING_POSITION_Y
+        self.player_rect = pygame.Rect(self.x, self.y, *PLAYER_SIZE) # Create a rect for the player to handle collisions and boundaries
+
     def draw(self, screen):
         pass
         
