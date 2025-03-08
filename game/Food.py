@@ -22,13 +22,13 @@ class Food(pygame.sprite.Sprite):
         self.food_rect.topleft = (self.x, self.y)
 
     def get_rect(self):
-        pass
+        return self.food_rect
     
     def get_size(self):
-        pass
+        return FOOD_SIZE
     
     def get_position(self):
-        pass
+        return (self.x, self.y)
     
 
     
