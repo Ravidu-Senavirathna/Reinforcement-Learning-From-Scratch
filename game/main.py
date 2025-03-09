@@ -34,23 +34,24 @@ def main():
     # Game loop
     running = True
 
+    player = Player()
+    food = Food()
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-
         # Handle player input
         player_input = pygame.key.get_pressed()
         if player_input[pygame.K_w]:
-            player_pos[1] -= 10
+            player.move(0, -10)
         if player_input[pygame.K_s]:
-            player_pos[1] += 10
+            player.move(0, 10)
         if player_input[pygame.K_a]:
-            player_pos[0] -= 10
+            player.move(-10, 0)
         if player_input[pygame.K_d]:
-            player_pos[0] += 10
-
+            player.move(10, 0)
 
         # Create a rect representing the screen
         screen_rect = screen.get_rect()
