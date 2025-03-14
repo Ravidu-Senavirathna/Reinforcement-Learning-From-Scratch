@@ -2,7 +2,7 @@ import pygame
 import random
 import os
 
-from Constants import *
+import Constants
 
 from Food import Food
 from Player import Player
@@ -11,7 +11,7 @@ from Player import Player
 pygame.init()
 
 # Set up the display
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT))
 
 # Set the title of the window
 pygame.display.set_caption("Game")
@@ -20,29 +20,37 @@ pygame.display.set_caption("Game")
 clock = pygame.time.Clock()
 
 # Text rendering setup
-font = pygame.font.Font(None, 36)  # Use default font and size 36
-text_color = WHITE  # White color for text
+font = pygame.font.Font(None, 36)
+text_color = Constants.WHITE
 
 
 # Main game loop
 def main():
 
-    # Score 
-    score = 0  # Initialize score
-    rendered_score = font.render(f"Score: {score}", True, text_color)  # Render the score text
+    ''' Initialize score and render the initial score text '''
+    score = 0
+    rendered_score = font.render(f"Score: {score}", True, text_color)
 
-    # Game loop
-    running = True
 
+
+    ''' Initialize game objects '''
     player = Player()
     food = Food()
+
+
+
+    ''' Main game loop '''
+    running = True
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        # Handle player input
+
+
+        ''' Handle player input: 
+        Move the player based on WASD keys'''
         player_input = pygame.key.get_pressed()
         if player_input[pygame.K_w]:
             player.move(0, -10)
@@ -53,31 +61,43 @@ def main():
         if player_input[pygame.K_d]:
             player.move(10, 0)
 
-        # Create a rect representing the screen
-        screen_rect = screen.get_rect()
 
-        # In your player update loop
+
+        ''' Keep the player within the screen boundaries:
+        Get the player's rect and clamp it to the screen rect, then update the player's position accordingly'''
+        screen_rect = screen.get_rect()
         player.get_rect().topleft = player.get_position()  # Update the player's rect position
         player.get_rect().clamp_ip(screen_rect)
         player.set_position(*player.get_rect().topleft)
 
-        # Clear the screen
-        screen.fill(BLACK)
+
+
+        ''' Clear the screen with a black background '''
+        screen.fill(Constants.BLACK)
     
-        # Draw the player and food
+
+
+        '''Draw the player, food and score text on the screen'''
         player.draw(screen)
         food.draw(screen)
         screen.blit(rendered_score, (10, 10))
 
-        # Check for collision between player and food
+
+
+        '''Check for collision between player and food: 
+        If they collide, increase the score and move the food to a new random position'''
         if player.get_rect().colliderect(food.get_rect()):
             score = score + 1
             rendered_score = font.render(f"Score: {score}", True, text_color)
-            food.move()  # Move the food to a new random position
+            food.move_to_random_position()
 
-        # Update game state here
+
+
+        '''Update game state here'''
         pygame.display.flip()
-        # Limit the frame rate to 60 frames per second
+
+
+        '''Limit the frame rate to 60 frames per second'''
         clock.tick(60)
 
 
