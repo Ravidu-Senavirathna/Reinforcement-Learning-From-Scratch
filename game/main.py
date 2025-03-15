@@ -4,7 +4,9 @@ import os
 
 import Constants
 
-from Food import Food
+PLAYER_SPEED = Constants.PLAYER_SPEED
+
+from Point import Point
 from Player import Player
 
 # Initialize Pygame
@@ -35,7 +37,7 @@ def main():
 
     ''' Initialize game objects '''
     player = Player()
-    food = Food()
+    point = Point()
 
 
 
@@ -53,13 +55,13 @@ def main():
         Move the player based on WASD keys'''
         player_input = pygame.key.get_pressed()
         if player_input[pygame.K_w]:
-            player.move(0, -10)
+            player.move(0, -PLAYER_SPEED)
         if player_input[pygame.K_s]:
-            player.move(0, 10)
+            player.move(0, PLAYER_SPEED)
         if player_input[pygame.K_a]:
-            player.move(-10, 0)
+            player.move(-PLAYER_SPEED, 0)
         if player_input[pygame.K_d]:
-            player.move(10, 0)
+            player.move(PLAYER_SPEED, 0)
 
 
 
@@ -77,19 +79,19 @@ def main():
     
 
 
-        '''Draw the player, food and score text on the screen'''
+        '''Draw the player, point and score text on the screen'''
         player.draw(screen)
-        food.draw(screen)
+        point.draw(screen)
         screen.blit(rendered_score, (10, 10))
 
 
 
-        '''Check for collision between player and food: 
-        If they collide, increase the score and move the food to a new random position'''
-        if player.get_rect().colliderect(food.get_rect()):
+        '''Check for collision between player and point: 
+        If they collide, increase the score and move the point to a new random position'''
+        if player.get_rect().colliderect(point.get_rect()):
             score = score + 1
             rendered_score = font.render(f"Score: {score}", True, text_color)
-            food.move_to_random_position()
+            point.move_to_random_position()
 
 
 
