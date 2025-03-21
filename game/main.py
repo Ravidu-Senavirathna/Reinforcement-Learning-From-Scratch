@@ -69,9 +69,9 @@ def main():
         ''' Keep the player within the screen boundaries:
         Get the player's rect and clamp it to the screen rect, then update the player's position accordingly'''
         screen_rect = screen.get_rect()
-        player.get_rect().center = player.get_position()  # Update the player's rect position
+        player.get_rect().topleft = player.get_position()  # Update the player's rect position
         player.get_rect().clamp_ip(screen_rect)
-        player.set_position(*player.get_rect().center)
+        player.set_position(*player.get_rect().topleft)
 
 
         Util.draw_frame(screen, player, point, rendered_score)
