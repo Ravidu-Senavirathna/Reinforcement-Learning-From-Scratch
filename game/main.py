@@ -49,21 +49,24 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            
+            dx, dy = 0, 0
 
-
-
-        ''' Handle player input: 
-        Move the player based on WASD keys'''
-        player_input = pygame.key.get_pressed()
-        if player_input[pygame.K_w]:
-            player.move(0, -PLAYER_SPEED)
-        if player_input[pygame.K_s]:
-            player.move(0, PLAYER_SPEED)
-        if player_input[pygame.K_a]:
-            player.move(-PLAYER_SPEED, 0)
-        if player_input[pygame.K_d]:
-            player.move(PLAYER_SPEED, 0)
-
+            ''' Handle player input: 
+            Move the player based on WASD keys'''
+            player_input = pygame.key.get_pressed()
+            if player_input[pygame.K_w]:
+                dy = -PLAYER_SPEED
+            if player_input[pygame.K_s]:
+                dy = PLAYER_SPEED
+            if player_input[pygame.K_a]:
+                dx = -PLAYER_SPEED
+            if player_input[pygame.K_d]:
+                dx = PLAYER_SPEED
+        
+        # Apply grid movement if an action was taken
+        if dx != 0 or dy != 0:
+            player.move(dx, dy)
 
 
         ''' Keep the player within the screen boundaries:
