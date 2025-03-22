@@ -12,7 +12,9 @@ SCREEN_HEIGHT = Constants.SCREEN_HEIGHT
 POINT_SIZE = Constants.POINT_SIZE
 POINT_COLOR = Constants.POINT_COLOR
 
-
+# Calculate how many full grid columns and rows fit on the screen
+cols = SCREEN_WIDTH // Constants.BOX_SIZE
+rows = SCREEN_HEIGHT // Constants.BOX_SIZE
 
 
 '''
@@ -40,8 +42,9 @@ class Point(pygame.sprite.Sprite):
         '''Initializes the Point object by setting its position to a random location on the screen and creating a rectangle for collision detection.'''
 
         pygame.sprite.Sprite.__init__(self)
-        self.x = random.randint(0, SCREEN_WIDTH - POINT_SIZE[0])
-        self.y = random.randint(0, SCREEN_HEIGHT - POINT_SIZE[1])
+        # Pick a random grid step index and scale it back to pixel coordinates
+        self.x = random.randint(0, cols - 1) * Constants.BOX_SIZE
+        self.y = random.randint(0, rows - 1) * Constants.BOX_SIZE
         self.point_rect = pygame.Rect(self.x, self.y, *POINT_SIZE)
 
 
@@ -59,10 +62,14 @@ class Point(pygame.sprite.Sprite):
     def move_to_random_position(self):
 
         '''Moves the point to a new random position on the screen.'''
-
-        self.x = random.randint(0, SCREEN_WIDTH - POINT_SIZE[0])
-        self.y = random.randint(0, SCREEN_HEIGHT - POINT_SIZE[1])
-        self.point_rect.center = (self.x, self.y)
+        '''Moves the point to a new random grid block position on the screen.'''
+        
+        # Pick a random grid step index and scale it back to pixel coordinates
+        self.x = random.randint(0, cols - 1) * Constants.BOX_SIZE
+        self.y = random.randint(0, rows - 1) * Constants.BOX_SIZE
+        
+        # Correctly bind the top-left of the rect to the grid coordinates
+        self.point_rect = pygame.Rect(self.x, self.y, *POINT_SIZE)
 
 
 
