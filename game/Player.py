@@ -4,10 +4,12 @@ import os
 
 import Constants
 
+COLS = Constants.COLUMNS
+ROWS = Constants.ROWS
 
 # Import necessary modules and constants for the Player class
-STARTING_POSITION_X = (Constants.SCREEN_WIDTH // 2) - (Constants.PLAYER_SIZE[0] // 2)
-STARTING_POSITION_Y = (Constants.SCREEN_HEIGHT // 2) - (Constants.PLAYER_SIZE[1] // 2)
+STARTING_POSITION_X = COLS // 2 * Constants.BOX_SIZE
+STARTING_POSITION_Y = ROWS // 2 * Constants.BOX_SIZE
 
 PLAYER_COLOR = Constants.PLAYER_COLOR
 PLAYER_SIZE = Constants.PLAYER_SIZE
