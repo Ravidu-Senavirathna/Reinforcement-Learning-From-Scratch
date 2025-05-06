@@ -1,3 +1,2 @@
-random_commands.txt
-.vscode/settings.json
+.vscode/*
 *.pyc
