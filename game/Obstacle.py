@@ -51,3 +51,18 @@ class Obstacle(pygame.sprite.Sprite):
                                 Constants.BOX_SIZE, Constants.BOX_SIZE)
 
 
+    def draw(self, screen):
+        '''Draw the obstacle as a filled rectangle on the screen.'''
+        surface = pygame.Surface((Constants.BOX_SIZE, Constants.BOX_SIZE))
+        surface.fill(Constants.OBSTACLE_COLOR)
+        screen.blit(surface, self.rect)
+
+
+    def get_rect(self):
+        '''Return the obstacle's Rect for collision detection.'''
+        return self.rect
+
+
+    def get_cell(self):
+        '''Return the obstacle's grid position as (col, row).'''
+        return (self.col, self.row)
