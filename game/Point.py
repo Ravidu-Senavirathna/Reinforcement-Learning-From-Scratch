@@ -18,20 +18,16 @@ rows = SCREEN_HEIGHT // Constants.BOX_SIZE
 
 
 '''
-The Point class inherits from pygame.sprite.Sprite, 
-which allows it to be used in conjunction with Pygame's sprite groups and collision detection features.
+The Point class inherits from pygame.sprite.Sprite.
 
-Main methods of the Point class include:
-    - __init__: Initializes the point with a random position and creates a rectangle for collision detection.
-    - draw: Draws the point on the screen as a rectangle filled with the specified color.
-    - move_to_random_position: Moves the point to a new random position on the screen.
+Updated to accept an obstacle_cells set so that the collectible never spawns
+on top of a wall.  The set is read-only here — Point does not modify it.
 
-
-The class also includes methods:
-    - getting the point's rect for collision detection 
-    - getting the point's size 
-    - getting the point's position as a tuple (x, y)
-
+Main methods:
+    - __init__                  : places the point at a random free grid cell
+    - draw                      : draws the point on the screen
+    - move_to_random_position   : relocates to a new random free cell
+    - get_rect / get_size / get_position : geometry helpers
 '''
 
 
