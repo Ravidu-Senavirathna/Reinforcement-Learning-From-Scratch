@@ -33,6 +33,7 @@ Main methods:
 
 
 class Point(pygame.sprite.Sprite):
+    
     def __init__(self):
 
         '''Initializes the Point object by setting its position to a random location on the screen and creating a rectangle for collision detection.'''
@@ -41,6 +42,19 @@ class Point(pygame.sprite.Sprite):
         # Pick a random grid step index and scale it back to pixel coordinates
         self.x = random.randint(0, cols - 1) * Constants.BOX_SIZE
         self.y = random.randint(0, rows - 1) * Constants.BOX_SIZE
+        self.point_rect = pygame.Rect(self.x, self.y, *POINT_SIZE)
+
+
+
+    def _place_randomly(self):
+        '''Pick a random free grid cell and position the rect there.'''
+        while True:
+            col = random.randint(0, cols - 1)
+            row = random.randint(0, rows - 1)
+            if (col, row) not in self._obstacle_cells:
+                break
+        self.x = col * Constants.BOX_SIZE
+        self.y = row * Constants.BOX_SIZE
         self.point_rect = pygame.Rect(self.x, self.y, *POINT_SIZE)
 
 
