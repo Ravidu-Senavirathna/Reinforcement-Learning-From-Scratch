@@ -71,15 +71,9 @@ class Point(pygame.sprite.Sprite):
 
     def move_to_random_position(self):
 
-        '''Moves the point to a new random position on the screen.'''
-        '''Moves the point to a new random grid block position on the screen.'''
+        '''Relocate the point to a new random free grid cell.'''
         
-        # Pick a random grid step index and scale it back to pixel coordinates
-        self.x = random.randint(0, cols - 1) * Constants.BOX_SIZE
-        self.y = random.randint(0, rows - 1) * Constants.BOX_SIZE
-        
-        # Correctly bind the top-left of the rect to the grid coordinates
-        self.point_rect = pygame.Rect(self.x, self.y, *POINT_SIZE)
+        self._place_randomly()
 
 
 
