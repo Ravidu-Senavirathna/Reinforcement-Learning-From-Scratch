@@ -28,3 +28,7 @@ PLAYER_SPEED = 20  # Speed of the player
 # Food properties
 POINT_SIZE = (BOX_SIZE, BOX_SIZE)  # Size of the food
 POINT_COLOR = GREEN  # Green color for the food
+
+# Obstacle properties
+OBSTACLE_COLOR = YELLOW
+NUM_OBSTACLES  = 80                  # how many wall cells to generate
