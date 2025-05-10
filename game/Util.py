@@ -1,8 +1,4 @@
-import sys
-import os
-import random
 import pygame
-
 import Constants
 
 
@@ -24,35 +20,32 @@ def draw_grid(surface,
 
 
 
-'''Renders the given text using the specified font and color. 
-This function is a simple wrapper around Pygame's font rendering capabilities.'''
+'''Simple font-render helper.'''
 
-def render_text(text, 
-                font, 
-                color):
+def render_text(text, font, color):
     
     return font.render(text, True, color)
 
 
 
-'''Draws the current game state on the screen. 
-This function will be called every frame to update the visuals. 
-It clears the screen, draws the grid, player, point, and score text.'''
+'''
+draw_frame — renders one complete frame.
 
-def draw_frame(screen, 
-               player, 
-               point, 
-               score_text
-               ):
-    
-    '''Draw the current game state on the screen. This function will be called every frame to update the visuals.'''
+Updated signature accepts an optional list of obstacles so that the human game
+and the A* demo can both use the same helper.
+'''
 
-    ''' Clear the screen with a black background '''
+def draw_frame(screen, player, point, score_text, obstacles=None):
+    '''Draw the current game state: background, grid, obstacles, player, point, HUD.'''
+
     screen.fill(Constants.BLACK)
     draw_grid(screen)
 
-    '''Draw the player, point and score text on the screen'''
+    # Draw obstacles first (behind player and point)
+    if obstacles:
+        for obs in obstacles:
+            obs.draw(screen)
+
     player.draw(screen)
     point.draw(screen)
-
     screen.blit(score_text, (10, 10))
