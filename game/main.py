@@ -1,30 +1,43 @@
 import pygame
-import random
-import os
-
 import Constants
 import Util
-
-PLAYER_SPEED = Constants.PLAYER_SPEED
-
 from Point import Point
 from Player import Player
+from Obstacle import Obstacle
+
+PLAYER_SPEED = Constants.PLAYER_SPEED
+BOX_SIZE = Constants.BOX_SIZE
 
 # Initialize Pygame
 pygame.init()
-
-# Set up the display
 screen = pygame.display.set_mode((Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT))
-
-# Set the title of the window
 pygame.display.set_caption("Game")
-
-# Set up the clock for managing the frame rate
 clock = pygame.time.Clock()
 
 # Text rendering setup
 font = pygame.font.Font(None, 36)
 text_color = Constants.WHITE
+
+
+
+def build_obstacles():
+    '''
+    Generate NUM_OBSTACLES wall cells, making sure none of them land on the
+    player's fixed starting cell (centre of the grid).
+    Returns (obstacle_list, obstacle_cells_set).
+    '''
+    # Reserve the player's starting grid cell
+    player_col = Constants.COLUMNS // 2
+    player_row = Constants.ROWS    // 2
+    occupied   = {(player_col, player_row)}
+
+    obstacles = []
+    for _ in range(Constants.NUM_OBSTACLES):
+        obs = Obstacle(occupied)   # Obstacle adds its own cell to `occupied`
+        obstacles.append(obs)
+
+    return obstacles, occupied
+
 
 
 # Main game loop
