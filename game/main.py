@@ -91,32 +91,25 @@ def main():
                 player.move(dx, dy)
 
 
-        ''' Keep the player within the screen boundaries:
-        Get the player's rect and clamp it to the screen rect, then update the player's position accordingly'''
+        # --- screen boundary clamp ---
         screen_rect = screen.get_rect()
-        player.get_rect().topleft = player.get_position()  # Update the player's rect position
+        player.get_rect().topleft = player.get_position()
         player.get_rect().clamp_ip(screen_rect)
         player.set_position(*player.get_rect().topleft)
 
+        # --- draw ---
+        Util.draw_frame(screen, player, point, rendered_score, obstacles)
 
-        Util.draw_frame(screen, player, point, rendered_score)
-
-
-        '''Check for collision between player and point: 
-        If they collide, increase the score and move the point to a new random position'''
+        # --- collision with point ---
         if player.get_rect().colliderect(point.get_rect()):
-            score = score + 1
+            score += 1
             rendered_score = font.render(f"Score: {score}", True, text_color)
             point.move_to_random_position()
 
-
-
-        '''Update game state here'''
         pygame.display.flip()
-
-
-        '''Limit the frame rate to 60 frames per second'''
         clock.tick(Constants.GAME_TICK_RATE)
+
+    pygame.quit()
 
 
 if __name__ == "__main__":
