@@ -3,8 +3,7 @@ import Constants
 
 
 
-'''Draws a grid on the given surface using the specified box size from Constants.
-This function is used to visually divide the game screen into a grid, which can help with movement and collision detection.'''
+'''Draws a grid on the given surface using the specified box size from Constants.'''
 
 def draw_grid(surface, 
               box_size=Constants.BOX_SIZE, 
@@ -29,11 +28,7 @@ def render_text(text, font, color):
 
 
 '''
-draw_frame — renders one complete frame.
-
-Updated signature accepts an optional list of obstacles so that the human game
-and the A* demo can both use the same helper.
-'''
+draw_frame — renders one complete frame.'''
 
 def draw_frame(screen, player, point, score_text, obstacles=None):
     '''Draw the current game state: background, grid, obstacles, player, point, HUD.'''
@@ -49,3 +44,23 @@ def draw_frame(screen, player, point, score_text, obstacles=None):
     player.draw(screen)
     point.draw(screen)
     screen.blit(score_text, (10, 10))
+
+
+
+def build_obstacles(Obstacle):
+    '''
+    Generate NUM_OBSTACLES wall cells, making sure none of them land on the
+    player's fixed starting cell (centre of the grid).
+    Returns (obstacle_list, obstacle_cells_set).
+    '''
+    # Reserve the player's starting grid cell
+    player_col = Constants.COLUMNS // 2
+    player_row = Constants.ROWS    // 2
+    occupied   = {(player_col, player_row)}
+
+    obstacles = []
+    for _ in range(Constants.NUM_OBSTACLES):
+        obs = Obstacle(occupied)   # Obstacle adds its own cell to `occupied`
+        obstacles.append(obs)
+
+    return obstacles, occupied
