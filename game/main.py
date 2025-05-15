@@ -20,25 +20,6 @@ text_color = Constants.WHITE
 
 
 
-def build_obstacles():
-    '''
-    Generate NUM_OBSTACLES wall cells, making sure none of them land on the
-    player's fixed starting cell (centre of the grid).
-    Returns (obstacle_list, obstacle_cells_set).
-    '''
-    # Reserve the player's starting grid cell
-    player_col = Constants.COLUMNS // 2
-    player_row = Constants.ROWS    // 2
-    occupied   = {(player_col, player_row)}
-
-    obstacles = []
-    for _ in range(Constants.NUM_OBSTACLES):
-        obs = Obstacle(occupied)   # Obstacle adds its own cell to `occupied`
-        obstacles.append(obs)
-
-    return obstacles, occupied
-
-
 
 # Main game loop
 def main():
@@ -50,7 +31,7 @@ def main():
 
 
     ''' Initialize game objects '''
-    obstacles, obstacle_cells = build_obstacles()
+    obstacles, obstacle_cells = Util.build_obstacles(Obstacle)
     player = Player()
     point  = Point(obstacle_cells)   # point will never spawn on a wall
 
