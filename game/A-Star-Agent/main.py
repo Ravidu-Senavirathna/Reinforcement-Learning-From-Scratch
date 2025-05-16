@@ -44,7 +44,9 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-
+        # --- draw ---
+        Util.draw_frame(screen, player, point, rendered_score, obstacles)
+        
         pygame.display.flip()
         clock.tick(PLAY_SPEED)
 
