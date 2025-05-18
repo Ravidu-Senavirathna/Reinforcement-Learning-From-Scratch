@@ -18,3 +18,15 @@ def find_path(start_cell, goal_cell, obstacle_cells):
     # explored in insertion order (keeps the heap stable).
     open_set = []
     heapq.heappush(open_set, (0 + manhattan(start_cell, goal_cell), 0, start_cell))
+
+
+    # closed set — cells already fully explored
+    closed_set = set()
+
+    while open_set:
+        f, g, current = heapq.heappop(open_set)
+
+        # Skip if we already processed this cell via a cheaper path
+        if current in closed_set:
+            continue
+        closed_set.add(current)
