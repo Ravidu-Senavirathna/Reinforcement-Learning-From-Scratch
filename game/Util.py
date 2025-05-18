@@ -27,8 +27,7 @@ def render_text(text, font, color):
 
 
 
-'''
-draw_frame — renders one complete frame.'''
+'''draw_frame — renders one complete frame.'''
 
 def draw_frame(screen, player, point, score_text, obstacles=None):
     '''Draw the current game state: background, grid, obstacles, player, point, HUD.'''
@@ -46,13 +45,9 @@ def draw_frame(screen, player, point, score_text, obstacles=None):
     screen.blit(score_text, (10, 10))
 
 
-
+'''Generate NUM_OBSTACLES wall cells, making sure none of them land on the player's fixed starting cell.'''
 def build_obstacles(Obstacle):
-    '''
-    Generate NUM_OBSTACLES wall cells, making sure none of them land on the
-    player's fixed starting cell (centre of the grid).
-    Returns (obstacle_list, obstacle_cells_set).
-    '''
+
     # Reserve the player's starting grid cell
     player_col = Constants.COLUMNS // 2
     player_row = Constants.ROWS    // 2
@@ -64,3 +59,18 @@ def build_obstacles(Obstacle):
         obstacles.append(obs)
 
     return obstacles, occupied
+
+
+
+'''Convert top-left pixel coordinates to (col, row).'''
+def pixel_to_cell(x, y):
+    x  = x // Constants.BOX_SIZE
+    y =  y // Constants.BOX_SIZE
+    return x, y
+
+    
+'''Convert (col, row) to top-left pixel coordinates.'''
+def cell_to_pixel(col, row):
+    col = col * Constants.BOX_SIZE
+    row = row * Constants.BOX_SIZE
+    return col, row

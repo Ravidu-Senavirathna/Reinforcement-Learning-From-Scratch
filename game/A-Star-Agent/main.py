@@ -12,7 +12,7 @@ import Util
 from Player   import Player
 from Point    import Point
 from Obstacle import Obstacle
-from Util import build_obstacles 
+from Util import build_obstacles , cell_to_pixel , pixel_to_cell
 
 PLAY_SPEED = 60
 BOX_SIZE     = Constants.BOX_SIZE
@@ -46,7 +46,7 @@ def main():
 
         # --- draw ---
         Util.draw_frame(screen, player, point, rendered_score, obstacles)
-        
+
         pygame.display.flip()
         clock.tick(PLAY_SPEED)
 
