@@ -19,6 +19,9 @@ def find_path(start_cell, goal_cell, obstacle_cells):
     open_set = []
     heapq.heappush(open_set, (0 + manhattan(start_cell, goal_cell), 0, start_cell))
 
+    # came_from[cell] = the cell we arrived from
+    came_from = {}
+
 
     # closed set — cells already fully explored
     closed_set = set()
@@ -30,3 +33,12 @@ def find_path(start_cell, goal_cell, obstacle_cells):
         if current in closed_set:
             continue
         closed_set.add(current)
+
+        # ── goal reached — reconstruct path ──────────────────────────────────
+        if current == goal_cell:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.reverse()          # start → goal order
+            return path             # start cell itself is excluded
