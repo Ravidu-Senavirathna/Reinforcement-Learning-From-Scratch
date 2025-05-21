@@ -32,6 +32,8 @@ def find_path(start_cell, goal_cell, obstacle_cells):
     # came_from[cell] = the cell we arrived from
     came_from = {}
 
+    # g_score[cell] = cheapest known cost from start to cell
+    g_score = {start_cell: 0}
 
     # closed set — cells already fully explored
     closed_set = set()
@@ -52,3 +54,20 @@ def find_path(start_cell, goal_cell, obstacle_cells):
                 current = came_from[current]
             path.reverse()          # start → goal order
             return path             # start cell itself is excluded
+
+        # ── expand neighbours ─────────────────────────────────────────────────
+        for neighbour in neighbours(current, obstacle_cells):
+            if neighbour in closed_set:
+                continue
+
+            tentative_g = g + 1     # every step costs 1
+
+            if tentative_g < g_score.get(neighbour, float('inf')):
+                # Found a cheaper route to this neighbour
+                came_from[neighbour] = current
+                g_score[neighbour]   = tentative_g
+                f_score              = tentative_g + manhattan(neighbour, goal_cell)
+                heapq.heappush(open_set, (f_score, tentative_g, neighbour))
+
+    # open set exhausted — no path exists
+    return []
