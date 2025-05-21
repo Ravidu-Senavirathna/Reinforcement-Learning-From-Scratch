@@ -1,6 +1,7 @@
 import heapq
 import sys
 import os
+import Constants
 
 # Make the parent game/ directory importable
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -9,6 +10,15 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 def manhattan(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
+DIRECTIONS = [(0, -1), (0, 1), (-1, 0), (1, 0)]   # UP DOWN LEFT RIGHT
+
+def neighbours(cell, obstacle_cells):
+    col, row = cell
+    for dir_col, dir_row in DIRECTIONS:
+        neigh_col, neigh_row = col + dir_col, row + dir_row
+        if 0 <= neigh_col < Constants.COLUMNS and 0 <= neigh_row < Constants.ROWS:
+            if (neigh_col, neigh_row) not in obstacle_cells:
+                yield (neigh_col, neigh_row)
 
 
 def find_path(start_cell, goal_cell, obstacle_cells):
