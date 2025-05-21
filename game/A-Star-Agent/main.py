@@ -13,6 +13,7 @@ from Player   import Player
 from Point    import Point
 from Obstacle import Obstacle
 from Util import build_obstacles , cell_to_pixel , pixel_to_cell
+from astar import find_path
 
 PLAY_SPEED = 60
 BOX_SIZE     = Constants.BOX_SIZE
@@ -36,6 +37,14 @@ def main():
     score          = 0
     rendered_score = font.render(f"Score: {score}", True, Constants.WHITE)
 
+    # --- initial path ---
+    start = pixel_to_cell(*player.get_position())
+    goal  = pixel_to_cell(*point.get_position())
+    path  = find_path(start, goal, obstacle_cells)   # list of (col, row) cells
+
+    # path_index tracks which step in the current path we are executing next
+    path_index = 0
+    
     running = True
     while running:
 
