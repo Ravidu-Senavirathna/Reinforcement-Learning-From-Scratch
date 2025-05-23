@@ -44,7 +44,7 @@ def main():
 
     # path_index tracks which step in the current path we are executing next
     path_index = 0
-    
+
     running = True
     while running:
 
@@ -52,6 +52,20 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        
+
+        # --- agent movement ---
+        if path_index < len(path):
+            # Next cell the agent wants to move into
+            next_col, next_row = path[path_index]
+            target_x, target_y = cell_to_pixel(next_col, next_row)
+
+            cur_x, cur_y = player.get_position()
+            dx = target_x - cur_x   # will be exactly ±BOX_SIZE or 0
+            dy = target_y - cur_y
+
+            player.move(dx, dy)
+            path_index += 1
 
         # --- draw ---
         Util.draw_frame(screen, player, point, rendered_score, obstacles)
