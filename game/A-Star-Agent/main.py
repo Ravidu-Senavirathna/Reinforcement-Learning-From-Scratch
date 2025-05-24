@@ -67,6 +67,18 @@ def main():
             player.move(dx, dy)
             path_index += 1
 
+        # --- collect point ---
+        if player.get_rect().colliderect(point.get_rect()):
+            score += 1
+            rendered_score = font.render(f"Score: {score}", True, Constants.WHITE)
+            point.move_to_random_position()
+
+            # Plan a fresh path to the new point position
+            start      = pixel_to_cell(*player.get_position())
+            goal       = pixel_to_cell(*point.get_position())
+            path       = find_path(start, goal, obstacle_cells)
+            path_index = 0
+
         # --- draw ---
         Util.draw_frame(screen, player, point, rendered_score, obstacles)
 
