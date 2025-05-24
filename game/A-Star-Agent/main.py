@@ -82,6 +82,12 @@ def main():
         # --- draw ---
         Util.draw_frame(screen, player, point, rendered_score, obstacles)
 
+        # Draw the planned path as small yellow dots so you can see A* working
+        for col, row in path[path_index:]:
+            px = col * BOX_SIZE + BOX_SIZE // 2
+            py = row * BOX_SIZE + BOX_SIZE // 2
+            pygame.draw.circle(screen, Constants.BLUE, (px, py), 3)
+            
         pygame.display.flip()
         clock.tick(PLAY_SPEED)
 
