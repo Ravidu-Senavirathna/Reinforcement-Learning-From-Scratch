@@ -5,7 +5,15 @@ import pygame
 # Allow imports from the parent game/ folder
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+'''
+Autonomous demo using A* pathfinding.
 
+The agent:
+    1. Converts pixel positions to grid (col, row) coordinates.
+    2. Calls astar.find_path() to get the optimal sequence of cells.
+    3. Walks the path one cell per tick — identical speed to the human player.
+    4. When the point is collected, a new path is planned immediately.
+'''
 
 import Constants
 import Util
