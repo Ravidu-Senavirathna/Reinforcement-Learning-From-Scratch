@@ -53,7 +53,34 @@ def neighbours(cell, obstacle_cells):
 
 
 def find_path(start_cell, goal_cell, obstacle_cells):
+    '''
+    A* search from start_cell to goal_cell on the game grid.
 
+    How A* works
+    ------------
+    A* maintains an *open set* — cells discovered but not yet fully explored —
+    ordered by f(n) = g(n) + h(n):
+
+        g(n)  actual cost from start to cell n  (steps taken so far)
+        h(n)  estimated cost from n to goal     (Manhattan distance)
+        f(n)  total estimated cost through n
+
+    At each step we pop the cell with the lowest f value and expand its
+    neighbours.  Because the heuristic never over-estimates, the first time we
+    reach the goal we are guaranteed to have found the shortest path.
+
+    Parameters
+    ----------
+    start_cell     : (col, row)
+    goal_cell      : (col, row)
+    obstacle_cells : set of (col, row)
+
+    Returns
+    -------
+    list of (col, row) — path from start (exclusive) to goal (inclusive).
+    Empty list if no path exists.
+    '''
+    
     # open_set entries: (f_score, g_score, cell)
     # g_score is included as a tiebreaker so cells with the same f_score are
     # explored in insertion order (keeps the heap stable).
