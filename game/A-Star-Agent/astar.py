@@ -23,7 +23,7 @@ find_path(start_cell, goal_cell, obstacle_cells) -> list[tuple[int,int]]
 
 
 # --- heuristic ---
-def manhattan(a, b):
+def _manhattan(a, b):
     '''
     Manhattan distance — the number of horizontal + vertical steps between two
     grid cells.  
@@ -36,7 +36,7 @@ def manhattan(a, b):
 # --- neighbour generator ---
 DIRECTIONS = [(0, -1), (0, 1), (-1, 0), (1, 0)]   # UP DOWN LEFT RIGHT
 
-def neighbours(cell, obstacle_cells):
+def _neighbours(cell, obstacle_cells):
     '''
     Yield walkable grid neighbours of `cell`.
 
@@ -85,7 +85,7 @@ def find_path(start_cell, goal_cell, obstacle_cells):
     # g_score is included as a tiebreaker so cells with the same f_score are
     # explored in insertion order (keeps the heap stable).
     open_set = []
-    heapq.heappush(open_set, (0 + manhattan(start_cell, goal_cell), 0, start_cell))
+    heapq.heappush(open_set, (0 + _manhattan(start_cell, goal_cell), 0, start_cell))
 
     # came_from[cell] = the cell we arrived from
     came_from = {}
@@ -114,7 +114,7 @@ def find_path(start_cell, goal_cell, obstacle_cells):
             return path             # start cell itself is excluded
 
         # ── expand neighbours ─────────────────────────────────────────────────
-        for neighbour in neighbours(current, obstacle_cells):
+        for neighbour in _neighbours(current, obstacle_cells):
             if neighbour in closed_set:
                 continue
 
@@ -124,7 +124,7 @@ def find_path(start_cell, goal_cell, obstacle_cells):
                 # Found a cheaper route to this neighbour
                 came_from[neighbour] = current
                 g_score[neighbour]   = tentative_g
-                f_score              = tentative_g + manhattan(neighbour, goal_cell)
+                f_score              = tentative_g + _manhattan(neighbour, goal_cell)
                 heapq.heappush(open_set, (f_score, tentative_g, neighbour))
 
     # open set exhausted — no path exists
