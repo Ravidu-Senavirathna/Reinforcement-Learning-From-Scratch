@@ -10,8 +10,6 @@ cd game
 python AStarAgent/main.py
 ```
 
----
-
 ## What is A\*
 
 A Star is a search algorithm that finds the shortest path between two points on a grid.
@@ -41,8 +39,6 @@ h(a, b) = |col_a - col_b| + |row_a - row_b|
 
 This is the number of horizontal and vertical steps between two cells.
 It is always admissible here because the player cannot move diagonally — every real path between two cells requires at least this many steps.
-
----
 
 ## File reference
 
@@ -123,5 +119,24 @@ path_index = 0
 
 The planned path is visualised as yellow dots drawn at the centre of each remaining cell.
 
----
+## Complexity
 
+| Property | Value |
+|---|---|
+| Time complexity | O(n log n) where n = number of grid cells explored |
+| Space complexity | O(n) for the open set, closed set, and came_from map |
+| Grid size | 40 × 30 = 1,200 cells |
+| Worst case | All cells explored before finding the goal |
+
+In practice on this 40×30 grid with 40 obstacles, A\* typically explores a small fraction of cells and plans each path in under a millisecond.
+
+## Why A\* is not reinforcement learning
+
+A\* requires:
+* The full obstacle map known in advance
+* The goal position known in advance
+* A defined cost function (steps)
+
+It produces the optimal path every time but learns nothing between runs. If the obstacle layout changes, A\* adapts instantly because it re-plans from scratch — but it never builds up knowledge from past experience.
+
+This makes A\* an ideal **baseline**: you can compare how many points the DQN agent scores versus A\* on the same map to measure how close the learned policy gets to optimal.
