@@ -108,3 +108,14 @@ per frame
       → score += 1
       → point.move_to_random_position()
 ```
+
+## How agents plug in
+
+Any agent replaces the keyboard polling section. Instead of reading `pygame.key.get_pressed()`, an agent calls `env.step(action)` which internally calls `player.move()` after doing the same wall-collision check. The `GameEnv` class in `DQNAgent/env.py` wraps the entire game loop into this interface:
+
+```python
+state          = env.reset()
+next_state, reward, done, info = env.step(action)   # action: 0=up 1=down 2=left 3=right
+```
+
+A* does not use this interface — it reads positions directly from `player.get_position()` and `point.get_position()`, calls `find_path()`, and drives the player by calling `player.move()` directly.
