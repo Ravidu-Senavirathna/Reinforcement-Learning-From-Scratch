@@ -8,3 +8,12 @@ from Point    import Point
 from Obstacle import Obstacle
 
 import config
+
+
+
+class GameEnv:
+
+    def __init__(self):
+        self.player = Player()
+        self.point  = Point()
+        self.steps  = 0
