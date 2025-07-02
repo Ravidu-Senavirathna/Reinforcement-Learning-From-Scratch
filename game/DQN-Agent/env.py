@@ -35,3 +35,28 @@ class GameEnv:
         """check weather the wall is blocking the given cell"""
         if col < 0 or col >= COLUMNS or row < 0 or row >= ROWS:
             return True
+        
+
+    def get_state(self):
+        player_column, player_row = self.player_cell()
+        point_column, point_row = self.point_cell()
+
+        danger_up    = float(self.is_blocked(player_column, player_row - 1))
+        danger_down  = float(self.is_blocked(player_column, player_row + 1))
+        danger_left  = float(self.is_blocked(player_column - 1, player_row))
+        danger_right = float(self.is_blocked(player_column + 1, player_row))
+
+        state = np.array([
+            player_column / COLUMNS,
+            player_row / ROWS,
+            point_column / COLUMNS,
+            point_row / ROWS,
+            (point_column - player_column) / COLUMNS,
+            (point_row - player_row) / ROWS,
+            danger_up,
+            danger_down,
+            danger_left,
+            danger_right,
+        ], dtype=np.float32)
+
+        return state
