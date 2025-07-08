@@ -34,3 +34,5 @@ class DQNAgent:
         self.target_network.load_state_dict(self.online_network.state_dict())
         self.target_network.eval()       # target net is never in training mode
 
+    def _state_to_tensor(self, state):
+        return torch.tensor(state, dtype=torch.float32).to(self.device) 
