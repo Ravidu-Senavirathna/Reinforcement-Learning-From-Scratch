@@ -22,10 +22,15 @@ class DQNAgent:
         self.target_network = QNetwork().to(self.device)
         self._sync_target()          # start with identical weights
 
-        self.optimiser = optim.Adam(self.online_net.parameters(), lr=LEARNING_RATE)
+        self.optimiser = optim.Adam(self.online_network.parameters(), lr=LEARNING_RATE)
         self.loss_fn   = nn.MSELoss()
 
         self.memory    = ReplayBuffer(BUFFER_SIZE)
 
         self.epsilon   = EPSILON_START
-        self.steps_done = 0 
+        self.steps_done = 0
+
+    def _sync_target(self):
+        self.target_network.load_state_dict(self.online_network.state_dict())
+        self.target_network.eval()       # target net is never in training mode
+
