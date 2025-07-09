@@ -5,7 +5,6 @@ import numpy as np
 
 from Player   import Player
 from Point    import Point
-from Obstacle import Obstacle
 
 from config import (BOX_SIZE, COLUMNS, ROWS)
 
@@ -60,3 +59,13 @@ class GameEnv:
         ], dtype=np.float32)
 
         return state
+    
+
+    def reset(self):
+        self.player.set_position(
+            (COLUMNS // 2) * BOX_SIZE,
+            (ROWS    // 2) * BOX_SIZE,
+        )
+        self.point.move_to_random_position()
+        self.steps = 0
+        return self.get_state()
