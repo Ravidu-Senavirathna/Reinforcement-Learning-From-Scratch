@@ -9,6 +9,17 @@ from Point    import Point
 from config import (BOX_SIZE, COLUMNS, ROWS)
 
 
+ACTIONS = {
+    0: ( 0, -BOX_SIZE),
+    1: ( 0,  BOX_SIZE),
+    2: (-BOX_SIZE,  0),
+    3: ( BOX_SIZE,  0),
+}
+MAX_STEPS = 500
+
+REWARD_WALL = -1.0
+REWARD_STEP = -0.02
+REWARD_COLLECT = 10.0
 
 class GameEnv:
 
@@ -69,3 +80,38 @@ class GameEnv:
         self.point.move_to_random_position()
         self.steps = 0
         return self.get_state()
+    
+
+    def step(self, action):
+        self.steps += 1
+        dx, dy = ACTIONS[action]
+
+        current_x, current_y = self.player.get_position()
+        new_col = (current_x + dx) // BOX_SIZE
+        new_row = (current_y + dy) // BOX_SIZE
+
+        # --- check for wall / boundary hit ---
+        if self.is_blocked(new_col, new_row):
+            reward     = REWARD_WALL
+            next_state = self.get_state()   # position unchanged
+            done       = False              # hitting a wall doesn't end the episode
+            return next_state, reward, done, {'steps': self.steps}
+
+        # --- valid move ---
+        self.player.move(dx, dy)
+        reward = REWARD_STEP
+
+        # --- check for point collection ---
+        done = False
+        collected = False
+        if self.player.get_rect().colliderect(self.point.get_rect()):
+            reward    = REWARD_COLLECT
+            collected = True
+            done      = True   # end episode on success so we can count episodes cleanly
+
+        # --- step limit ---
+        if self.steps >= MAX_STEPS:
+            done = True
+
+        next_state = self.get_state()
+        return next_state, reward, done, {'collected': collected, 'steps': self.steps}
