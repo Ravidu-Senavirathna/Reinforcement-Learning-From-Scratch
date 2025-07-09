@@ -115,3 +115,8 @@ class GameEnv:
 
         next_state = self.get_state()
         return next_state, reward, done, {'collected': collected, 'steps': self.steps}
+
+
+    def get_render_data(self):
+        '''Return everything play.py needs to draw one frame.'''
+        return self.player, self.point
