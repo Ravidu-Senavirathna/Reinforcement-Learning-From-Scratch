@@ -14,6 +14,12 @@ EPSILON_START = 1.0
 from env import ACTIONS
 NUM_ACTIONS = len(ACTIONS)
 
+WARMUP_STEPS = 1000
+BATCH_SIZE = 64
+GAMMA = 0.99
+TARGET_UPDATE_FREQ = 500
+
+
 class DQNAgent:
 
     def __init__(self):
@@ -25,7 +31,7 @@ class DQNAgent:
         self._sync_target()          # start with identical weights
 
         self.optimiser = optim.Adam(self.online_network.parameters(), lr=LEARNING_RATE)
-        self.loss_fn   = nn.MSELoss()
+        self.loss_function   = nn.MSELoss()
 
         self.memory    = ReplayBuffer(BUFFER_SIZE)
 
@@ -52,3 +58,42 @@ class DQNAgent:
     
     def remember(self, state, action, reward, next_state, done):
         self.memory.push(state, action, reward, next_state, done)
+
+
+    def learn(self):
+        if len(self.memory) < WARMUP_STEPS:
+            return None   # not enough data yet
+
+        states, actions, rewards, next_states, dones = self.memory.sample(BATCH_SIZE)
+
+        # Convert to tensors
+        states      = torch.tensor(states,      dtype=torch.float32).to(self.device)
+        actions     = torch.tensor(actions,     dtype=torch.int64  ).to(self.device)
+        rewards     = torch.tensor(rewards,     dtype=torch.float32).to(self.device)
+        next_states = torch.tensor(next_states, dtype=torch.float32).to(self.device)
+        dones       = torch.tensor(dones,       dtype=torch.float32).to(self.device)
+
+        # ── predicted Q-values (online net) ──────────────────────────────────
+        # online_net outputs shape (batch, 4); we select the Q-value for the
+        # action that was actually taken using gather()
+        predicted = self.online_network(states).gather(1, actions.unsqueeze(1)).squeeze(1)
+        # shape: (batch,)
+
+        # ── Bellman targets (target net, no gradients) ────────────────────────
+        with torch.no_grad():
+            next_q   = self.target_network(next_states).max(1).values  # best Q for next state
+            target   = rewards + GAMMA * next_q * (1.0 - dones)        # 0 if done
+        # shape: (batch,)
+
+        # ── gradient step ─────────────────────────────────────────────────────
+        loss = self.loss_function(predicted, target)
+        self.optimiser.zero_grad()
+        loss.backward()
+        self.optimiser.step()
+
+        # ── sync target network periodically ─────────────────────────────────
+        self.steps_done += 1
+        if self.steps_done % TARGET_UPDATE_FREQ == 0:
+            self._sync_target()
+
+        return loss.item()
