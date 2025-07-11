@@ -11,6 +11,8 @@ LEARNING_RATE = 1e-3
 BUFFER_SIZE = 50000
 EPSILON_START = 1.0
 
+from env import ACTIONS
+NUM_ACTIONS = len(ACTIONS)
 
 class DQNAgent:
 
@@ -36,3 +38,14 @@ class DQNAgent:
 
     def _state_to_tensor(self, state):
         return torch.tensor(state, dtype=torch.float32).to(self.device) 
+    
+
+
+    def act(self, state):
+        if np.random.rand() < self.epsilon:
+            return np.random.randint(NUM_ACTIONS)   # explore
+
+        # exploit: forward pass, pick highest Q-value action
+        with torch.no_grad():
+            q_values = self.online_network(self._state_to_tensor(state))
+        return q_values.argmax().item()
