@@ -49,3 +49,6 @@ class DQNAgent:
         with torch.no_grad():
             q_values = self.online_network(self._state_to_tensor(state))
         return q_values.argmax().item()
+    
+    def remember(self, state, action, reward, next_state, done):
+        self.memory.push(state, action, reward, next_state, done)
