@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import torch
 import torch.nn as nn
@@ -21,6 +22,7 @@ BATCH_SIZE = 64
 GAMMA = 0.99
 TARGET_UPDATE_FREQ = 500
 
+SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
 
 class DQNAgent:
 
@@ -104,3 +106,7 @@ class DQNAgent:
     def decay_epsilon(self):
         '''Call once per episode to reduce exploration rate.'''
         self.epsilon = max(EPSILON_END, self.epsilon * EPSILON_DECAY)
+
+    def save(self, path=SAVE_PATH):
+        torch.save(self.online_network.state_dict(), path)
+        print(f'  Weights saved → {path}')
