@@ -10,6 +10,8 @@ from buffer import ReplayBuffer
 LEARNING_RATE = 1e-3
 BUFFER_SIZE = 50000
 EPSILON_START = 1.0
+EPSILON_END = 0.05
+EPSILON_DECAY = 0.9995
 
 from env import ACTIONS
 NUM_ACTIONS = len(ACTIONS)
@@ -97,3 +99,8 @@ class DQNAgent:
             self._sync_target()
 
         return loss.item()
+
+
+    def decay_epsilon(self):
+        '''Call once per episode to reduce exploration rate.'''
+        self.epsilon = max(EPSILON_END, self.epsilon * EPSILON_DECAY)
