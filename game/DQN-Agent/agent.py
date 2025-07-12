@@ -110,3 +110,10 @@ class DQNAgent:
     def save(self, path=SAVE_PATH):
         torch.save(self.online_network.state_dict(), path)
         print(f'  Weights saved → {path}')
+
+
+    def load(self, path=SAVE_PATH):
+        self.online_network.load_state_dict(torch.load(path, map_location=self.device))
+        self._sync_target()
+        self.epsilon = 0.0   # fully greedy when playing back
+        print(f'  Weights loaded ← {path}')
