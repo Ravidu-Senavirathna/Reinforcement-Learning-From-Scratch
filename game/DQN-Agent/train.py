@@ -12,3 +12,15 @@ import numpy as np
 from env   import GameEnv
 from agent import DQNAgent
 
+
+
+
+def train():
+    env   = GameEnv()
+    agent = DQNAgent()
+
+
+
+
+if __name__ == '__main__':
+    train()
