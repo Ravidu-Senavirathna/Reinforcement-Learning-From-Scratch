@@ -13,11 +13,15 @@ from env   import GameEnv
 from agent import DQNAgent
 
 
-
+NUM_EPISODES = 2000
 
 def train():
     env   = GameEnv()
     agent = DQNAgent()
+
+    print(f'Training DQN for {NUM_EPISODES} episodes...')
+    print(f'Device: {agent.device}')
+    print(f'Warming up replay buffer ({agent.memory.__class__.__name__})...\n')
 
 
 
