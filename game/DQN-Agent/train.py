@@ -24,6 +24,15 @@ def train():
     print(f'Warming up replay buffer ({agent.memory.__class__.__name__})...\n')
 
 
+    scores        = []   # points collected per episode
+    losses        = []   # training losses
+    best_score    = 0
+    
+    for episode in range(1, NUM_EPISODES + 1):
+        state      = env.reset()
+        total_reward = 0.0
+        ep_losses    = []
+        collected    = 0
 
 
 if __name__ == '__main__':
