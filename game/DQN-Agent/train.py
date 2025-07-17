@@ -14,6 +14,7 @@ from agent import DQNAgent
 
 SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
 NUM_EPISODES = 2000
+PRINT_EVERY = 20
 
 def train():
     env   = GameEnv()
@@ -59,6 +60,21 @@ def train():
         if collected > best_score:
             best_score = collected
             agent.save(SAVE_PATH)
+
+
+        if episode % PRINT_EVERY == 0:
+            avg_score = np.mean(scores[-PRINT_EVERY:])
+            avg_loss  = np.mean(losses[-PRINT_EVERY:]) if losses else 0.0
+            print(
+                f'Episode {episode:>5} / {NUM_EPISODES} | '
+                f'Avg score: {avg_score:.2f} | '
+                f'Avg loss: {avg_loss:.4f} | '
+                f'Epsilon: {agent.epsilon:.3f} | '
+                f'Buffer: {len(agent.memory):>6}'
+            )
+
+    print(f'\nTraining complete.  Best score: {best_score}')
+    print(f'Final weights saved to: {SAVE_PATH}')
 
 if __name__ == '__main__':
     train()
