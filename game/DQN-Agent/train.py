@@ -50,5 +50,10 @@ def train():
             if info.get('collected'):
                 collected += 1
 
+        agent.decay_epsilon()
+        scores.append(collected)
+        if ep_losses:
+            losses.append(np.mean(ep_losses))
+
 if __name__ == '__main__':
     train()
