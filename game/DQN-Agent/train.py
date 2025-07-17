@@ -12,7 +12,7 @@ import numpy as np
 from env   import GameEnv
 from agent import DQNAgent
 
-
+SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
 NUM_EPISODES = 2000
 
 def train():
@@ -54,6 +54,11 @@ def train():
         scores.append(collected)
         if ep_losses:
             losses.append(np.mean(ep_losses))
+
+
+        if collected > best_score:
+            best_score = collected
+            agent.save(SAVE_PATH)
 
 if __name__ == '__main__':
     train()
