@@ -13,6 +13,12 @@ from agent import DQNAgent
 def play(num_episodes=10, fps=10):
     pygame.init()
 
+    screen = pygame.display.set_mode((Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT))
+    pygame.display.set_caption('DQN Agent')
+
+    font   = pygame.font.Font(None, 36)
+    tick   = pygame.time.Clock()
+
 
 
 
