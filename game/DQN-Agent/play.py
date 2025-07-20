@@ -7,10 +7,10 @@ import Constants
 from env   import GameEnv
 from agent import DQNAgent
 
+SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
 
 
-
-def play(num_episodes=10, fps=10):
+def play():
     pygame.init()
 
     screen = pygame.display.set_mode((Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT))
@@ -20,6 +20,9 @@ def play(num_episodes=10, fps=10):
     tick   = pygame.time.Clock()
 
 
+    env   = GameEnv()
+    agent = DQNAgent()
+    agent.load(SAVE_PATH)
 
 
     pygame.quit()
