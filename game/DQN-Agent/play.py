@@ -7,3 +7,16 @@ import Constants
 from env   import GameEnv
 from agent import DQNAgent
 
+
+
+
+def play(num_episodes=10, fps=10):
+    pygame.init()
+
+
+
+
+    pygame.quit()
+
+if __name__ == '__main__':
+    play()
