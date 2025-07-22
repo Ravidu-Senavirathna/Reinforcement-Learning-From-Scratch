@@ -8,7 +8,7 @@ from env   import GameEnv
 from agent import DQNAgent
 
 SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
-
+num_episodes = 10
 
 def play():
     pygame.init()
@@ -23,6 +23,12 @@ def play():
     env   = GameEnv()
     agent = DQNAgent()
     agent.load(SAVE_PATH)
+
+
+    for episode in range(1, num_episodes + 1):
+        state     = env.reset()
+        score     = 0
+        done      = False
 
 
     pygame.quit()
