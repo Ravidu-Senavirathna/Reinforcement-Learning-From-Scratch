@@ -30,7 +30,16 @@ def play():
         score     = 0
         done      = False
 
+        while not done:
+            # Quit events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit(); return
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    pygame.quit(); return
+                
 
+                
     pygame.quit()
 
 if __name__ == '__main__':
