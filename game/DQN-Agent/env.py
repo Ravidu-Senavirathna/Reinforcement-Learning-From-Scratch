@@ -33,13 +33,13 @@ class GameEnv:
         x, y = self.player.get_position()
         x = x // BOX_SIZE
         y = y // BOX_SIZE
-        return 
+        return x , y
 
     def point_cell(self):
         x, y = self.point.get_position()
         x = x // BOX_SIZE
         y = y // BOX_SIZE
-        return 
+        return x, y
 
     def is_blocked(self, col, row):
         """check weather the wall is blocking the given cell"""
