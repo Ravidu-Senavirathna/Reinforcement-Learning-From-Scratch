@@ -9,6 +9,7 @@ from agent import DQNAgent
 
 SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
 num_episodes = 10
+fps = 10
 
 def play():
     pygame.init()
@@ -43,6 +44,15 @@ def play():
             if info.get('collected'):
                 score += 1
 
+            player, point, obstacles = env.get_render_data()
+            score_text = font.render(
+                f'Episode {episode} | Score: {score}', True, Constants.WHITE
+            )
+            Util.draw_frame(screen, player, point, score_text, obstacles)
+            pygame.display.flip()
+            tick.tick(fps)
+
+        print(f'Episode {episode}: score = {score}')
     pygame.quit()
 
 if __name__ == '__main__':
