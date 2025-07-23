@@ -38,8 +38,11 @@ def play():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                     pygame.quit(); return
                 
+            action = agent.act(state)
+            state, reward, done, info = env.step(action)
+            if info.get('collected'):
+                score += 1
 
-                
     pygame.quit()
 
 if __name__ == '__main__':
