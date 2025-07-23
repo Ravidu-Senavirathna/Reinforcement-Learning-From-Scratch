@@ -45,7 +45,7 @@ class GameEnv:
         """check weather the wall is blocking the given cell"""
         if col < 0 or col >= COLUMNS or row < 0 or row >= ROWS:
             return True
-        
+        return False
 
     def get_state(self):
         player_column, player_row = self.player_cell()
