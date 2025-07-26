@@ -8,8 +8,8 @@ from env   import GameEnv
 from agent import DQNAgent
 
 SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
-num_episodes = 10
-fps = 10
+num_episodes = 20
+fps = 60
 
 def play():
     pygame.init()
