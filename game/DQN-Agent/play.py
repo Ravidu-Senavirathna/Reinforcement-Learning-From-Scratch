@@ -44,11 +44,11 @@ def play():
             if info.get('collected'):
                 score += 1
 
-            player, point, obstacles = env.get_render_data()
+            player, point = env.get_render_data()
             score_text = font.render(
                 f'Episode {episode} | Score: {score}', True, Constants.WHITE
             )
-            Util.draw_frame(screen, player, point, score_text, obstacles)
+            Util.draw_frame(screen, player, point, score_text)
             pygame.display.flip()
             tick.tick(fps)
 
