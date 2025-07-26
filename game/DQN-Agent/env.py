@@ -15,10 +15,10 @@ ACTIONS = {
     2: (-BOX_SIZE,  0),
     3: ( BOX_SIZE,  0),
 }
-MAX_STEPS = 500
 
-REWARD_WALL = -1.0
-REWARD_STEP = -0.02
+MAX_STEPS = 200
+
+REWARD_STEP = -0.1
 REWARD_COLLECT = 10.0
 
 class GameEnv:
