@@ -18,6 +18,7 @@ ACTIONS = {
 
 MAX_STEPS = 200
 
+REWARD_WALL = -1.0
 REWARD_STEP = -0.1
 REWARD_COLLECT = 10.0
 
@@ -107,7 +108,8 @@ class GameEnv:
         if self.player.get_rect().colliderect(self.point.get_rect()):
             reward    = REWARD_COLLECT
             collected = True
-            done      = True   # end episode on success so we can count episodes cleanly
+            done      = False                        # ← don't end the episode
+            self.point.move_to_random_position()     # ← relocate the point, keep going
 
         # --- step limit ---
         if self.steps >= MAX_STEPS:
