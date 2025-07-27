@@ -95,6 +95,7 @@ class DQNAgent:
         loss = self.loss_function(predicted, target)
         self.optimiser.zero_grad()
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.online_network.parameters(), max_norm=1.0)
         self.optimiser.step()
 
         # ── sync target network periodically ─────────────────────────────────
