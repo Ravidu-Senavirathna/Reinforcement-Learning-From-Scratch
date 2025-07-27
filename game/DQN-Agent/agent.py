@@ -8,19 +8,21 @@ from model import QNetwork
 from buffer import ReplayBuffer
 
 
-LEARNING_RATE = 1e-3
+LEARNING_RATE = 2.5e-4
+
 BUFFER_SIZE = 50000
+
 EPSILON_START = 1.0
 EPSILON_END = 0.05
-EPSILON_DECAY = 0.9995
+EPSILON_DECAY = 0.9999
 
 from env import ACTIONS
 NUM_ACTIONS = len(ACTIONS)
 
-WARMUP_STEPS = 1000
+WARMUP_STEPS = 2000
 BATCH_SIZE = 64
 GAMMA = 0.99
-TARGET_UPDATE_FREQ = 500
+TARGET_UPDATE_FREQ = 1000
 
 SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
 
