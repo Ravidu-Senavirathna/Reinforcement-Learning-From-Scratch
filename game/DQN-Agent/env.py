@@ -5,6 +5,9 @@ import numpy as np
 
 from Player   import Player
 from Point    import Point
+from Obstacle import Obstacle
+from Util    import build_obstacles
+
 
 from config import (BOX_SIZE, COLUMNS, ROWS)
 
@@ -28,6 +31,7 @@ class GameEnv:
         self.player = Player()
         self.point  = Point()
         self.steps  = 0
+        self.obstacles , self.obstacle_cells = build_obstacles(Obstacle)
 
 
     def player_cell(self):
@@ -46,7 +50,7 @@ class GameEnv:
         """check weather the wall is blocking the given cell"""
         if col < 0 or col >= COLUMNS or row < 0 or row >= ROWS:
             return True
-        return False
+        return (col, row) in self.obstacle_cells
 
     def get_state(self):
         player_column, player_row = self.player_cell()
@@ -121,4 +125,4 @@ class GameEnv:
 
     def get_render_data(self):
         '''Return everything play.py needs to draw one frame.'''
-        return self.player, self.point
+        return self.player, self.point, self.obstacles
