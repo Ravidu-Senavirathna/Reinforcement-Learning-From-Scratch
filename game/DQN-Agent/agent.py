@@ -50,7 +50,7 @@ class DQNAgent:
 
 
     def _state_to_tensor(self, state):
-        return torch.tensor(state, dtype=torch.float32).to(self.device) 
+        return torch.tensor(state, dtype=torch.float32).unsqueeze(0).to(self.device)
     
 
 
