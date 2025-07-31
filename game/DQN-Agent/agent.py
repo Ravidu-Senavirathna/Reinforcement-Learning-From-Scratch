@@ -116,7 +116,11 @@ class DQNAgent:
 
 
     def load(self, path=SAVE_PATH):
-        self.online_network.load_state_dict(torch.load(path, map_location=self.device))
-        self._sync_target()
-        self.epsilon = 0.0   # fully greedy when playing back
-        print(f'  Weights loaded ← {path}')
+        try:
+            self.online_network.load_state_dict(torch.load(path, map_location=self.device))
+            self._sync_target()
+            self.epsilon = 0.0
+            print(f'Weights loaded ← {path}')
+        except RuntimeError as e:
+            print(f'WARNING: could not load weights — {e}')
+            print('Starting from scratch with fresh weights.')
