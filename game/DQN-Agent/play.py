@@ -36,8 +36,6 @@ def play():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit(); return
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                    pygame.quit(); return
                 
             action = agent.act(state)
             state, reward, done, info = env.step(action)
