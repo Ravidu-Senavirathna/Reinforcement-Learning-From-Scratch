@@ -4,7 +4,7 @@ import torch.nn as nn
 
 class QNetwork(nn.Module):
 
-    def __init__(self, state_size= 10,
+    def __init__(self, state_size= 31,
                  num_actions= 4,
                  hidden_size= 128):
         super().__init__()
