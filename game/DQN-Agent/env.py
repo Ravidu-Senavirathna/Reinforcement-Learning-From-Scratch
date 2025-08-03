@@ -62,28 +62,25 @@ class GameEnv:
         player_column, player_row = self.player_cell()
         point_column, point_row = self.point_cell()
 
-        danger_up    = float(self.is_blocked(player_column, player_row - 1))
-        danger_down  = float(self.is_blocked(player_column, player_row + 1))
-        danger_left  = float(self.is_blocked(player_column - 1, player_row))
-        danger_right = float(self.is_blocked(player_column + 1, player_row))
-
-        state = np.array([
+        nav = [
             player_column / COLUMNS,
-            player_row / ROWS,
-            point_column / COLUMNS,
-            point_row / ROWS,
-            (point_column - player_column) / COLUMNS,
-            (point_row - player_row) / ROWS,
-            danger_up,
-            danger_down,
-            danger_left,
-            danger_right,
-        ], dtype=np.float32)
+            player_row    / ROWS,
+            point_column  / COLUMNS,
+            point_row     / ROWS,
+            float(np.sign(point_column - player_column)),
+            float(np.sign(point_row    - player_row)),
+        ]
 
-        return state
+        vision = []
+        for dr in range(-VISION_RADIUS, VISION_RADIUS + 1):
+            for dc in range(-VISION_RADIUS, VISION_RADIUS + 1):
+                vision.append(float(self.is_blocked(player_column + dc, player_row + dr)))
+
+        return np.array(nav + vision, dtype=np.float32)
     
 
     def reset(self):
+        self.obstacles, self.obstacle_cells = build_obstacles(Obstacle)  # ← add this
         self.player.set_position(
             (COLUMNS // 2) * BOX_SIZE,
             (ROWS    // 2) * BOX_SIZE,
