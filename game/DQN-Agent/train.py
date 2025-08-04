@@ -14,8 +14,8 @@ from agent import DQNAgent
 
 SAVE_PATH = os.path.join(os.path.dirname(__file__), 'dqn_weights.pth')
 
-NUM_EPISODES = 10000
-PRINT_EVERY = 100
+NUM_EPISODES = 500
+PRINT_EVERY = 1
 
 def train():
     env   = GameEnv()
