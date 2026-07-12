@@ -28,4 +28,4 @@ POINT_COLOR = GREEN                   # Green color for the food
 
 # Obstacle properties
 OBSTACLE_COLOR = GRAY
-NUM_OBSTACLES  = 150                  # how many wall cells to generate
+NUM_OBSTACLES  = 100                  # how many wall cells to generate
